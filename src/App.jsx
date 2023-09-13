@@ -4,8 +4,7 @@ import './index.css'
 function App() {
   return (
     <>
-          <h1>Traffic Light</h1>
-          <Ligth />
+      <Ligth />
     </>
   )
 }
