@@ -77,3 +77,37 @@
   border: none;
   background-clip: padding-box;
 }
+
+.off_Purple {
+  background-color: rgb(232, 13, 155);
+}
+
+.on_Purple {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(135, 71, 104);
+  box-shadow: 0 0 50px 25px rgb(255, 254, 254);
+  border: none;
+}
+
+.button{
+  width: 100px;
+  font-size: large;
+  height: 60px;
+  background-color: rgb(6, 21, 240);
+  border: none;
+  background-clip: padding-box;
+  border-radius: 10px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.text{
+  font-size: 30px;
+  margin-top: 20px;
+  color: rgb(1, 1, 1);
+  background-color: rgb(255, 0, 140);
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+}
