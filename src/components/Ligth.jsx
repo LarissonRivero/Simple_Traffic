@@ -44,7 +44,7 @@ function Light() {
   return (
     <>
       <div className="traficc">
-        <h1>Semáforo</h1>
+        <h1>Traffic Light</h1>
         <div className="Container">
           <div className={colorRed} onClick={handleClick_Red}></div> {/*Se llama a la funcion que se activa al presionar el color respectivo*/}
           <div className={colorYellow} onClick={handleClick_Yellow}></div>
