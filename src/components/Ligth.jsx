@@ -1,62 +1,97 @@
-import { useEffect, useState } from "react";//Importacion de los hooks useEffect y useState
+import React, { useEffect, useState } from "react";
 
+//Estado Inicial del semáforo (Apagado) ==> setColor (funcion que cambia el estado a on_Color) llama al estilo CSS correspondiente
 function Light() {
-    const [colorRed, setColorRed] = useState('off_Red'); //Estado Inicial del semáforo (Apagado) ==> colorRed (falso) llama al estilo CSS off_Red
-    const [colorYellow, setColorYellow] = useState('off_Yellow');
-    const [colorGreen, setColorGreen] = useState('off_Green');
-    const [newColor, setNewColor] = useState(false);//Estado inicial del nuevo color, que se activa cuando se presiona el botón (newColor = false)
-    const [colorPurple, setColorPurple] = useState('off_Purple');//Estado inicial del nuevo color, que se activa cuando se presiona el botón (colorPurple = false)
-    const [alert, setAlert] = useState(false);// alerta que se activa cuando se presiona el botón (alert = false)
+  const [colorRed, setColorRed] = useState("off_Red");
+  const [colorYellow, setColorYellow] = useState("off_Yellow");
+  const [colorGreen, setColorGreen] = useState("off_Green");
+  const [colorPurple, setColorPurple] = useState('off_Purple');
+  const [newColor, setNewColor] = useState(false);
+  const [alert, setAlert] = useState(false);
 
-  const handleClick_Red = () => {// Funcion que se activa al momento de presionar el color respectivo y cambia el estado del semáforo a encendido, pasa el estado de colorRed de true a false y  setColorRed de false a true y llama al estilo CSS on_Red
-    setColorRed('on_Red');
+  // Funciones que modifica el estado de los colores, al presionarlos cambian de OFF ha ON, y posterior se condiciona el presionado de otro boton para cambiar el estado del que esta encencido ha apagado
+  const handleClick_Red = () => {
+    if (colorRed === "on_Red") {
+      setColorRed("off_Red");
+    } else {
+      setColorRed("on_Red");
+      setColorYellow("off_Yellow");
+      setColorGreen("off_Green");
+      setNewColor(false);
+    }
   };
 
   const handleClick_Yellow = () => {
-    setColorYellow('on_Yellow');
+    if (colorYellow === "on_Yellow") {
+      setColorYellow("off_Yellow");
+    } else {
+      setColorYellow("on_Yellow");
+      setColorRed("off_Red");
+      setColorGreen("off_Green");
+      setNewColor(false);
+    }
   };
 
   const handleClick_Green = () => {
-    setColorGreen('on_Green');
+    if (colorGreen === "on_Green") {
+      setColorGreen("off_Green");
+    } else {
+      setColorGreen("on_Green");
+      setColorRed("off_Red");
+      setColorYellow("off_Yellow");
+      setNewColor(false);
+    }
   };
 
   const handleClick_Purple = () => {
-    setColorGreen('on_Purple');
+      if (colorPurple === "on_Purple") {
+        setColorPurple("off_Purple");
+      } else {
+        setColorPurple("on_Purple");
+      }
   };
 
-  const handleClick = () => {//Funcion del Boton, al presionarlo cambia los estados de setAlert y setNewColor de false a true, activando el nuevo color y la alerta.
+  const handleClick = () => {
     setAlert(true);
     setNewColor(true);
+    setColorRed("off_Red");
+    setColorYellow("off_Yellow");
+    setColorGreen("off_Green");
+    setColorPurple("off_Purple");
   };
 
-  useEffect(() => {//Vuelve a colocar los valores de los estados en falso, apagando el semáforo y el nuevo color, y desactivando la alerta. se llama la funcion setInterval para que se ejecute pasado 3 segundos
+  //Con la funcion useEffect, volvemos despues de 3 segundos a renderizar el componente alert, para que pase de true a False, solo se va activara cuando el Componente setAlert cambie.
+  useEffect(() => {
     const interval = setInterval(() => {
-      setColorRed('off_Red');
-      setColorYellow('off_Yellow');
-      setColorGreen('off_Green');
-      setColorPurple('off_Purple');
-      setNewColor(false);
       setAlert(false);
     }, 3000);
     return () => clearInterval(interval);
-  }, [setColorRed, setColorYellow, setColorGreen, setColorPurple, setAlert]);//Se llama a los estados que se van a utilizar en el useEffect
+  }, [setAlert]);//Se llama a los estados que se van a utilizar en el useEffect
 
   return (
     <>
       <div className="traficc">
         <h1>Traffic Light</h1>
         <div className="Container">
-          <div className={colorRed} onClick={handleClick_Red}></div> {/*Se llama a la funcion que se activa al presionar el color respectivo*/}
+          <div className={colorRed} onClick={handleClick_Red}></div>
           <div className={colorYellow} onClick={handleClick_Yellow}></div>
           <div className={colorGreen} onClick={handleClick_Green}></div>
-          {newColor ? <div className={colorPurple} onClick={handleClick_Purple}></div> : null}
+          {newColor ? (
+            <div className={colorPurple} onClick={handleClick_Purple}></div>
+          ) : null}
         </div>
-        <button className="button" onClick={handleClick}>Cambiar Color</button>
-        {alert ? <div className="text">Tu semáforo ahora tiene un nuevo color</div> : null}{/*Se llama a la alerta que se activa al presionar el botón, se utiliza un operador ternario, para comprobar el estado*/}
+        <button className="button" onClick={handleClick}>
+          Cambiar Color
+        </button>
+        {/*Se llama a la alerta que se activa al presionar el botón, se utiliza un operador ternario, para comprobar el estado*/}
+        {alert ? (
+          <div className="text">Tu semáforo ahora tiene un nuevo color</div>
+        ) : null}
       </div>
     </>
   );
 }
 
 export default Light;
+
 
